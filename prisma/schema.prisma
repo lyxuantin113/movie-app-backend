@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique @db.VarChar(190)
+  password  String    // hash bcrypt
+  name      String?   @db.VarChar(100)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  favorites FavoritesOnUsers[]
+}
+
+model Movie {
+  id              Int      @id            // TMDB id
+  title           String
+  overview        String    @default("")
+  poster_path     String?
+  backdrop_path   String?
+  release_date    DateTime?
+  vote_average    Float     @default(0)
+  vote_count      Int       @default(0)
+  popularity      Float     @default(0)
+  adult           Boolean   @default(false)
+  original_language String?
+  runtime         Int?
+  genres          Genre[]   @relation("MoviesOnGenres")
+
+  favoritesBy     FavoritesOnUsers[]
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+}
+
+model Genre {
+  id      Int     @id
+  name    String
+  movies  Movie[] @relation("MoviesOnGenres")
+}
+
+model FavoritesOnUsers {
+  userId  Int
+  movieId Int
+  createdAt DateTime @default(now())
+
+  user   User  @relation(fields: [userId], references: [id])
+  movie  Movie @relation(fields: [movieId], references: [id])
+
+  @@id([userId, movieId])
+  @@index([movieId])
+}

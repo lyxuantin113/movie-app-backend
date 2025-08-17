@@ -1,0 +1,44 @@
+{
+  "name": "movie-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "postinstall": "prisma generate",
+    "dev": "prisma generate && tsx watch src/index.ts",
+    "build": "tsc -p .",
+    "start": "node dist/index.js",
+    "prisma:dev": "prisma migrate dev --name init",
+    "prisma:gen": "prisma generate",
+    "seed": "tsx src/seed/seed.ts",
+    "seed:user": "tsx src/scripts/seedUser.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@prisma/client": "^6.14.0",
+    "axios": "^1.11.0",
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.13",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pino": "^9.9.0",
+    "zod": "^4.0.17"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.9",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.3.0",
+    "pino-pretty": "^13.1.1",
+    "prisma": "^6.14.0",
+    "tsx": "^4.20.4",
+    "typescript": "^5.9.2"
+  }
+}
